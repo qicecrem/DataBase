@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define Maxsize 10
-#define ElemType int
+#define ElemType int//ElemType 类型根据具体情况可改变
 #define OK 1
 #define ERROR 0
 #define status int
