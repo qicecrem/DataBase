@@ -4,16 +4,20 @@
 #define status int
 #define OK 1
 #define ERROR 0
+//双向链表存储结构
 typedef struct DulNode {
 	ElemType data;
+	//后继指针
 	struct DulNode* next;
+	//前驱指针
 	struct DulNode* prior;
 }DoulNode,*DuLinklist;
+//获取双链表的长度
 int GetLength(DuLinklist l)
 {
 	DuLinklist p;
 	p = l->next;
-	int count = 0;
+	int count = 1;
 	while (l != p)
 	{
 		p = p->next;
@@ -21,23 +25,23 @@ int GetLength(DuLinklist l)
 	}
 	return count;
 }
+//获取第i个元素
 status GetEle(DuLinklist l,int i,ElemType* e)
 {
-	if (i > GetLength(l))
-	{
-		return ERROR;
-	}
 	DuLinklist p;
 	p = l->next;
 	int j = 1;
-	while (j<i)
+	while (p!=l&&j<i)
 	{
 		p =p->next;
 		j++;
 	}
+	if (j < i)
+		return ERROR;
 	*e = p->data;
 	return OK;
 }
+//初始化双链表
 status InitList(DuLinklist* l)
 {
 	if ((*l))
@@ -49,60 +53,52 @@ status InitList(DuLinklist* l)
 	(*l)->prior = *l;
 	return OK;
 }
+//在第i个位置插入e
 status ListInsert(DuLinklist* l, int i, ElemType e)
 {
 	int j = 1;
 	DuLinklist p,s;
 	p = *l;
-	if (i > GetLength(*l) + 1)
-	{
-		return ERROR;
-	}
-	while (j < i)
+	while (p!=*l&&j < i)
 	{
 		p = p->next;
 		j++;
 	}
+	if (j < i)
+		return ERROR;
 	s = (DuLinklist)malloc(sizeof(DoulNode));
 	s->data = e;
+	//把p->next赋值给s的后继
 	s->next = p->next;
+	//把p赋值给s的前驱
 	s->prior = p;
+	//把s赋值给p->next的前驱
 	p->next->prior = s;
+	// 把s赋值给p的后继
 	p->next = s;
 	return OK;
 }
-status ListPush_back(DuLinklist* l, ElemType e)
-{
-	DuLinklist p, s;
-	p = *l;
-	s = (DuLinklist)malloc(sizeof(DulNode));
-	s->data = e;
-	s->next = p;
-	s->prior = p->prior;
-	p->prior->next = s;
-	p->prior = s;
-	return OK;
-}
+//删除第i个节点
 status ListDelete(DuLinklist* l, int i, ElemType* e)
 {
 	DuLinklist p, q;
 	p = *l;
 	int j = 1;
-	while (j < i)
+	while (p!=*l&&j < i)
 	{
 		j++;
 		p = p->next;
 	}
-	if (j > i)
-	{
+	if (j < i)
 		return ERROR;
-	}
 	q = p->next;
 	p->next = q->next;
 	q->next->prior = p;
 	free(q);
+	q = NULL;
 	return OK;
 }
+//给第i个节点赋值为e
 status Assignment(DuLinklist* l, int i, ElemType e)
 {
 	DuLinklist p;
@@ -120,6 +116,7 @@ status Assignment(DuLinklist* l, int i, ElemType e)
 	p->data = e;
 	return OK;
 }
+//删除整个双向表
 status ClearList(DuLinklist* l)
 {
 	DuLinklist p, q;
@@ -130,7 +127,6 @@ status ClearList(DuLinklist* l)
 		free(p);
 		p = q;
 	}
-	free(*l);
 	*l = NULL;
 	return OK;
 }
