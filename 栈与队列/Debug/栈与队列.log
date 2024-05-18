@@ -1,3 +1,12 @@
 ﻿  test.c
+  队列的链式存储.c
+  队列顺序存储.c
+  正在生成代码...
+  两栈共享空间.h
+  栈.h
   栈的链式存储结构.h
-  栈与队列.vcxproj -> D:\code\datastruct\栈与队列\Debug\栈与队列.exe
+  正在生成代码...
+队列顺序存储.obj : error LNK2005: _Dequenue 已经在 队列的链式存储.obj 中定义
+队列顺序存储.obj : error LNK2005: _Enquenue 已经在 队列的链式存储.obj 中定义
+队列顺序存储.obj : error LNK2005: _QuenueLength 已经在 队列的链式存储.obj 中定义
+D:\code\datastruct\栈与队列\Debug\栈与队列.exe : fatal error LNK1169: 找到一个或多个多重定义的符号
